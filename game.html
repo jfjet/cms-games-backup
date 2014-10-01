@@ -5,7 +5,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<style>
 		body { margin: 0; background-color: #eee;}
@@ -37,9 +37,8 @@
 			emulator.css('width', width);
 			emulator.css('height', height);
 		}
-
 		function start() {
-			var rom = 'emulator/rom/' + $('#rom').val();
+			var rom = 'roms/' + $('#rom').val();
 			var system = $('#rom option:selected').attr('data-system');
 			var emulatorbox = $('#emulatorbox');
 			var flashvars = {
@@ -51,7 +50,7 @@
 			params.allowscriptaccess = 'sameDomain';
 			params.allowFullScreen = 'true';
 			params.allowFullScreenInteractive = 'true';
-			swfobject.embedSWF('emulator/bin/Nesbox.swf', 'emulator', '100%', '100%', '11.2.0', 'flash/expressInstall.swf', flashvars, params, attributes);
+			swfobject.embedSWF('flash/Nesbox.swf', 'emulator', '100%', '100%', '11.2.0', 'flash/expressInstall.swf', flashvars, params, attributes);
 		}
 		start();
 	</script>
