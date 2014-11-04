@@ -15,7 +15,7 @@
 		#help { text-align: center; color: #666;}
 		#emulatorbox { text-align: center; margin: 10px auto;}
 		main { position: fixed; left: 300px; top: 0; bottom: 0; right: 0;}
-		.centered { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+		#table { width: 100%; height: 100%;}
 		#rom img { width: 25px; height: 25px; margin-right: 2px; }
 		.separator { margin-right: 10px;}
 	</style>
@@ -57,17 +57,24 @@
 		</ul>
 	</aside>
 	<main>
-		<div class="centered">
-			<div id="emulatorbox">
-				<div id="emulator"></div>
-			</div>
-			<div id="help">
-				<kbd class="light">Left</kbd> <kbd class="light">Right</kbd> <kbd class="light">Up</kbd> <kbd class="light">Down</kbd> to move
-				<span class="separator"></span>
-				<kbd class="light">Z</kbd> <kbd class="light">X</kbd> <kbd class="light">C</kbd> <kbd class="light">A</kbd> <kbd class="light">S</kbd> <kbd class="light">D</kbd> for buttons
-				<span class="separator"></span>
-				<kbd class="light">Enter</kbd> for start <kbd class="light">Space</kbd> for select
-			</div>
+		<table id="table">
+		<tbody>
+		<tr>
+			<td>
+				<div id="emulatorbox">
+					<div id="emulator"></div>
+				</div>
+				<div id="help">
+					<kbd class="light">Left</kbd> <kbd class="light">Right</kbd> <kbd class="light">Up</kbd> <kbd class="light">Down</kbd> to move
+					<span class="separator"></span>
+					<kbd class="light">Z</kbd> <kbd class="light">X</kbd> <kbd class="light">C</kbd> <kbd class="light">A</kbd> <kbd class="light">S</kbd> <kbd class="light">D</kbd> for buttons
+					<span class="separator"></span>
+					<kbd class="light">Enter</kbd> for start <kbd class="light">Space</kbd> for select
+				</div>
+			</td>
+		</tr>
+		</tbody>
+		</table>
 		</div>
 	</main>
 	<script>
