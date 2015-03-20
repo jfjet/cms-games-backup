@@ -18,6 +18,7 @@
 		#table { width: 100%; height: 100%;}
 		#rom img { width: 25px; height: 25px; margin-right: 2px; }
 		.separator { margin-right: 10px;}
+		#gameframe { position: absolute; top: 0; left: 0; bottom: 0; right: 0;}
 	</style>
 </head>
 <body>
@@ -99,28 +100,36 @@
 					<img src="roms/qbert.png"> 5.14 Q*Bert
 				</a>
 			</li>
+			<li>
+				<a data-ver="5.15" data-iframe="https://archive.org/embed/msdos_SimCity_1989">
+					<img src="roms/simcity.jpg"> 5.15 SimCity
+				</a>
+			</li>
 		</ul>
 	</aside>
 	<main>
 		<div id="gamebox">
-		<table id="table">
-		<tbody>
-		<tr>
-			<td>
-				<div id="emulatorbox">
-					<div id="emulator"></div>
-				</div>
-				<div id="help">
-					<kbd class="light">Left</kbd> <kbd class="light">Right</kbd> <kbd class="light">Up</kbd> <kbd class="light">Down</kbd> to move
-					<span class="separator"></span>
-					<kbd class="light">Z</kbd> <kbd class="light">X</kbd> <kbd class="light">C</kbd> <kbd class="light">A</kbd> <kbd class="light">S</kbd> <kbd class="light">D</kbd> for buttons
-					<span class="separator"></span>
-					<kbd class="light">Enter</kbd> for start <kbd class="light">Space</kbd> for select
-				</div>
-			</td>
-		</tr>
-		</tbody>
-		</table>
+			<table id="table">
+			<tbody>
+			<tr>
+				<td>
+					<div id="emulatorbox">
+						<div id="emulator"></div>
+					</div>
+					<div id="help">
+						<kbd class="light">Left</kbd> <kbd class="light">Right</kbd> <kbd class="light">Up</kbd> <kbd class="light">Down</kbd> to move
+						<span class="separator"></span>
+						<kbd class="light">Z</kbd> <kbd class="light">X</kbd> <kbd class="light">C</kbd> <kbd class="light">A</kbd> <kbd class="light">S</kbd> <kbd class="light">D</kbd> for buttons
+						<span class="separator"></span>
+						<kbd class="light">Enter</kbd> for start <kbd class="light">Space</kbd> for select
+					</div>
+				</td>
+			</tr>
+			</tbody>
+			</table>
+		</div>
+		<div id="gameframe" style="display: none;">
+			<iframe width="100%" height="100%" id="gameiframe"></iframe>
 		</div>
 	</main>
 	<script>
@@ -135,19 +144,30 @@
 			emulator.css('height', height);
 		}
 		function start() {
-			var rom = 'roms/' + $('#rom .active a').attr('data-rom');
-			var system = $('#rom .active a').attr('data-system');
-			var emulatorbox = $('#emulatorbox');
-			var flashvars = {
-				system : system,
-				url : rom
-			};
-			var params = {};
-			var attributes = {};
-			params.allowscriptaccess = 'sameDomain';
-			params.allowFullScreen = 'true';
-			params.allowFullScreenInteractive = 'true';
-			swfobject.embedSWF('flash/Nesbox.swf', 'emulator', '100%', '100%', '11.2.0', 'flash/expressInstall.swf', flashvars, params, attributes);
+			var iframesrc = $('#rom .active a').attr('data-iframe');
+			if (iframesrc) {
+				$('#gamebox').hide();
+				$('#gameframe').show();
+				$('#gameiframe').attr('src', iframesrc);
+			} else { 
+				$('#gamebox').show();
+				$('#gameframe').hide();
+				$('#gameiframe').removeAttr('src');
+
+				var rom = 'roms/' + $('#rom .active a').attr('data-rom');
+				var system = $('#rom .active a').attr('data-system');
+				var emulatorbox = $('#emulatorbox');
+				var flashvars = {
+					system : system,
+					url : rom
+				};
+				var params = {};
+				var attributes = {};
+				params.allowscriptaccess = 'sameDomain';
+				params.allowFullScreen = 'true';
+				params.allowFullScreenInteractive = 'true';
+				swfobject.embedSWF('flash/Nesbox.swf', 'emulator', '100%', '100%', '11.2.0', 'flash/expressInstall.swf', flashvars, params, attributes);
+			}
 		}
 		
 		$.urlParam = function(name){
@@ -158,7 +178,11 @@
 				return results[1] || 0;
 		}
 		var ver = $.urlParam('ver').replace(/^(\d+\.\d+)(.*)$/,'$1');
+		if (ver === '')
+			ver = $('a[data-ver]').last().attr('data-ver');
 		$('a[data-ver="'+ver+'"]').click()
+		var scrollTop = $('a[data-ver="'+ver+'"]').offset().top
+		$('aside').scrollTop(scrollTop);
 	</script>
 </body>
 </html>
